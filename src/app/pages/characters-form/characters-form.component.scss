@@ -1,0 +1,20 @@
+.character-form-page {
+    &__form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      .form-group {
+        margin-bottom: 1rem;
+        label {
+          display: block;
+          font-weight: bold;
+        }
+        input, select {
+          width: 100%;
+          padding: 6px;
+          margin-top: 4px;
+        }
+      }
+    }
+  }
+  
