@@ -6,5 +6,4 @@ export const routes: Routes = [
   { path: '', redirectTo: 'characters', pathMatch: 'full' },
   { path: 'characters', component: CharactersListComponent },
   { path: 'characters/create', component: CharacterFormComponent },
-  { path: 'characters/edit/:id', component: CharacterFormComponent },
 ];

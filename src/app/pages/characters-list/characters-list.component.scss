@@ -131,10 +131,6 @@ $card-shadow: rgba(0, 0, 0, 0.12);
     border-radius: 50%;
   }
 
-  mat-card-header {
-    background-color: lighten($background-color, 5%);
-    padding-bottom: 0.5rem;
-  }
 
   mat-card-content {
     flex: 1;
