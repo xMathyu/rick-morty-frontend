@@ -1,91 +1,193 @@
-.characters-list-page {
+$primary-color: #1976d2;
+$secondary-color: #ff4081;
+$background-color: #f5f5f5;
+$text-color: #424242;
+$card-shadow: rgba(0, 0, 0, 0.12);
+
+.characters-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $background-color;
+  font-family: 'Roboto', sans-serif;
+
+  &__toolbar {
+    position: fixed;   
+    top: 0;
+    left: 0;
+    width: 100%;      
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #fafafa;
-  
-    &__toolbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    align-items: center;
+    padding: 0 1rem;
+    box-shadow: 0 2px 4px $card-shadow;
+    z-index: 1000;
+
+    .toolbar-title {
       font-size: 1.5rem;
+      font-weight: 500;
     }
-  
-    &__container {
-      padding: 1rem;
-      flex: 1;
+
+    .spacer {
+      flex: 1 1 auto;
     }
-  
-    &__controls {
+
+    .search-container {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-  
-      .characters-list-page__search-field {
-        width: 100%;
-        max-width: 400px;
-      }
-  
-      .characters-list-page__pagination {
+      height: 100%;
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: 0;
+
+      &__field {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        height: 100%;
+        margin: 0;
+        width: 250px;
+
+        .mat-form-field-wrapper,
+        .mat-form-field-flex {
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
+
+        .mat-form-field-flex {
+          background-color: #fff;
+          border-radius: 24px;
+        }
+
+        .mat-form-field-infix {
+          padding: 0 8px;
+        }
       }
     }
-  
-    &__section {
-      margin-bottom: 2rem;
+  }
+
+  &__container {
+    flex: 1;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 64px auto 0;  
+  }
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: $text-color;
+}
+
+.section {
+  margin-bottom: 3rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: $text-color;
+      margin: 0;
     }
+  }
+}
+
+.cards-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   
-    &__subtitle {
-      margin-bottom: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #333;
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (min-width: 1440px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.character-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+  }
+
+  .character-card__avatar {
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+  }
+
+  mat-card-header {
+    background-color: lighten($background-color, 5%);
+    padding-bottom: 0.5rem;
+  }
+
+  mat-card-content {
+    flex: 1;
+    p {
+      margin: 0.3rem 0;
+      font-size: 0.9rem;
+      color: $text-color;
     }
-  
-    &__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+@media (max-width: 600px) {
+  .characters-page__toolbar {
+    flex-wrap: wrap;          
+    padding: 0.5rem 1rem;    
+
+    .toolbar-title {
+      font-size: 1.2rem;     
+      margin-bottom: 0.5rem; 
     }
-  
-    &__spinner {
+
+    .spacer {
+      display: none;         
+    }
+
+    .search-container {
+      width: 100%;
+      margin-top: 0.5rem;
       display: flex;
       justify-content: center;
-      margin: 2rem 0;
-    }
-  }
-  
-  /* Tarjeta de personaje */
-  .character-card {
-    &.mat-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      transition: box-shadow 0.3s ease;
-      cursor: pointer;
-  
-      &:hover {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      align-items: center;
+
+      &__field {
+        width: 90%;          
+        margin: 0 auto;       
+        height: auto;       
+
+        .mat-form-field-flex {
+          border-radius: 16px;
+        }
       }
     }
-    mat-card-header {
-      background-color: #e0e0e0;
-    }
-    .character-card__avatar {
-      background-size: cover;
-      background-position: center;
-    }
-    mat-card-content {
-      flex: 1;
-    }
-    mat-card-actions {
-      display: flex;
-      justify-content: space-between;
-    }
   }
-  
+}

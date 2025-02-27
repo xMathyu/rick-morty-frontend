@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://my-backend-in-cloud-run',
+  apiUrl: 'https://rick-morty-backend-747449133192.us-east1.run.app',
 };

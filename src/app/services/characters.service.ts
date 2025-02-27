@@ -76,4 +76,13 @@ export class CharactersService {
   deleteCharacter(id: string): Observable<{ success: boolean }> {
     return this.http.delete<{ success: boolean }>(`${this.baseUrl}/${id}`);
   }
+
+  /**
+   * Retrieves the list of locations stored in Firestore using GET /characters/locations.
+   */
+  getLocations(): Observable<Info<any>> {
+    return this.http.get<Info<any>>(
+      `${environment.apiUrl}/characters/locations`
+    );
+  }
 }

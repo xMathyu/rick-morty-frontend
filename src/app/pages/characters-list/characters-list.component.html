@@ -1,42 +1,41 @@
-<div class="characters-list-page">
-    <!-- Toolbar -->
-    <mat-toolbar color="primary" class="characters-list-page__toolbar">
-        <span>Rick & Morty Characters</span>
-    </mat-toolbar>
+<div class="characters-page">
+    <mat-toolbar color="primary" class="characters-page__toolbar">
+        <span class="toolbar-title">Characters Dashboard</span>
+        <span class="spacer"></span>
 
-    <div class="characters-list-page__container">
-        <!-- Search and Pagination Controls -->
-        <div class="characters-list-page__controls">
-            <mat-form-field appearance="outline" class="characters-list-page__search-field">
-                <mat-label>Search by Name</mat-label>
-                <input matInput placeholder="Enter name" [(ngModel)]="searchName" />
-                <button matSuffix mat-icon-button *ngIf="searchName" (click)="searchName=''">
+        <div class="search-container">
+            <mat-form-field appearance="fill" class="search-container__field">
+                <mat-label>Search by name</mat-label>
+                <input matInput placeholder="Type a name" [(ngModel)]="searchName"
+                    (keyup.enter)="loadExternalCharacters()" />
+
+                <button matSuffix mat-icon-button *ngIf="searchName" (click)="searchName = ''">
                     <mat-icon>close</mat-icon>
                 </button>
-            </mat-form-field>
-            <button mat-raised-button color="accent" (click)="loadExternalCharacters()">
-                <mat-icon>search</mat-icon>
-                Search External
-            </button>
-            <div class="characters-list-page__pagination">
-                <button mat-icon-button (click)="prevPage()" [disabled]="page <= 1">
-                    <mat-icon>chevron_left</mat-icon>
-                </button>
-                <span>Page: {{ page }}</span>
-                <button mat-icon-button (click)="nextPage()">
-                    <mat-icon>chevron_right</mat-icon>
-                </button>
-            </div>
-        </div>
 
-        <!-- Firestore Characters Section -->
-        <section class="characters-list-page__section">
-            <h2 class="characters-list-page__subtitle">My Firestore Characters</h2>
-            <div class="characters-list-page__grid">
+                <button matSuffix mat-icon-button (click)="loadExternalCharacters()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </mat-toolbar>
+
+    <div class="characters-page__container">
+
+        <section class="section">
+            <header class="section__header">
+                <h2>My Characters</h2>
+                <button mat-raised-button color="primary" (click)="createCharacter()">
+                    <mat-icon>add</mat-icon>
+                    Add Character
+                </button>
+            </header>
+            <div class="cards-grid">
                 <mat-card class="character-card" *ngFor="let char of firestoreCharacters">
                     <mat-card-header>
                         <div mat-card-avatar class="character-card__avatar"
-                            [style.background-image]="'url(' + char.image + ')'"></div>
+                            [style.background-image]="'url(' + char.image + ')'">
+                        </div>
                         <mat-card-title>{{ char.name }}</mat-card-title>
                         <mat-card-subtitle>Status: {{ char.status }}</mat-card-subtitle>
                     </mat-card-header>
@@ -61,17 +60,29 @@
             </div>
         </section>
 
-        <!-- External Characters Section -->
-        <section class="characters-list-page__section">
-            <h2 class="characters-list-page__subtitle">External Rick & Morty Characters</h2>
-            <div *ngIf="loading" class="characters-list-page__spinner">
+        <div class="pagination-controls">
+            <button mat-icon-button (click)="prevPage()" [disabled]="page <= 1">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span> Page {{ page }} </span>
+            <button mat-icon-button (click)="nextPage()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+
+        <section class="section">
+            <header class="section__header">
+                <h2>Rick & Morty Characters</h2>
+            </header>
+            <div *ngIf="loading" class="spinner-container">
                 <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
             </div>
-            <div class="characters-list-page__grid" *ngIf="!loading">
+            <div class="cards-grid" *ngIf="!loading">
                 <mat-card class="character-card" *ngFor="let ext of externalCharacters">
                     <mat-card-header>
                         <div mat-card-avatar class="character-card__avatar"
-                            [style.background-image]="'url(' + ext.image + ')'"></div>
+                            [style.background-image]="'url(' + ext.image + ')'">
+                        </div>
                         <mat-card-title>{{ ext.name }}</mat-card-title>
                         <mat-card-subtitle>Status: {{ ext.status }}</mat-card-subtitle>
                     </mat-card-header>
@@ -85,5 +96,15 @@
                 </mat-card>
             </div>
         </section>
+
+        <div class="pagination-controls">
+            <button mat-icon-button (click)="prevPage()" [disabled]="page <= 1">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span> Page {{ page }} </span>
+            <button mat-icon-button (click)="nextPage()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

@@ -1,40 +1,73 @@
 <div class="character-form-page">
-    <h2>{{ isEdit ? 'Edit' : 'Create' }} Character</h2>
-
-    <form [formGroup]="form" class="character-form-page__form">
-        <div class="form-group">
-            <label>Name:</label>
-            <input formControlName="name" />
-        </div>
-
-        <div class="form-group">
-            <label>Status:</label>
-            <select formControlName="status">
-                <option value="Alive">Alive</option>
-                <option value="Dead">Dead</option>
-                <option value="unknown">Unknown</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Species:</label>
-            <input formControlName="species" />
-        </div>
-
-        <div class="form-group">
-            <label>Gender:</label>
-            <select formControlName="gender">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Genderless">Genderless</option>
-                <option value="unknown">Unknown</option>
-            </select>
-        </div>
-
-        <!-- ... otros campos (type, origin, location, etc.) -->
-
-        <button class="button button--primary" type="button" (click)="onSubmit()">
-            {{ isEdit ? 'Update' : 'Create' }}
-        </button>
-    </form>
+    <mat-card class="character-form-page__card">
+        <mat-card-header class="character-form-page__card-header">
+            <mat-card-title>{{ isEdit ? 'Edit Character' : 'Create Character' }}</mat-card-title>
+            <mat-card-subtitle>
+                {{ isEdit ? 'Modify character details' : 'Fill in the details to create a new character' }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="form" class="character-form-page__form">
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" placeholder="Enter character name" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option value="Alive">Alive</mat-option>
+                        <mat-option value="Dead">Dead</mat-option>
+                        <mat-option value="unknown">Unknown</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Species</mat-label>
+                    <input matInput formControlName="species" placeholder="Enter species" />
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option value="Male">Male</mat-option>
+                        <mat-option value="Female">Female</mat-option>
+                        <mat-option value="Genderless">Genderless</mat-option>
+                        <mat-option value="unknown">Unknown</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Origin</mat-label>
+                    <input type="text" matInput [formControl]="originNameControl" [matAutocomplete]="autoOrigin"
+                        placeholder="Select origin" />
+                    <mat-autocomplete #autoOrigin="matAutocomplete">
+                        <mat-option *ngFor="let loc of filteredOriginOptions | async" [value]="loc.name">
+                            {{ loc.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Location</mat-label>
+                    <input type="text" matInput [formControl]="locationNameControl" [matAutocomplete]="autoLocation"
+                        placeholder="Select location" />
+                    <mat-autocomplete #autoLocation="matAutocomplete">
+                        <mat-option *ngFor="let loc of filteredLocationOptions | async" [value]="loc.name">
+                            {{ loc.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-group__field">
+                    <mat-label>Image URL</mat-label>
+                    <input matInput formControlName="image" placeholder="Enter image URL" />
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions align="end" class="character-form-page__actions">
+            <button mat-raised-button color="primary" class="action-button" (click)="onSubmit()">
+                <mat-icon>save</mat-icon>
+                {{ isEdit ? 'Update' : 'Create' }}
+            </button>
+            <button mat-stroked-button color="warn" class="action-button" (click)="cancel()">
+                <mat-icon>arrow_back</mat-icon>
+                Cancel
+            </button>
+        </mat-card-actions>
+    </mat-card>
 </div>
